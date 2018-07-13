@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Secp256k1Net
+namespace Secp256k1Ecdh
 {
     static class LoadLibNative
     {

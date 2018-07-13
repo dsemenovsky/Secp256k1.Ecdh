@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2035
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Secp256k1.Ecdh", "Secp256k1.Ecdh\Secp256k1.Ecdh.csproj", "{9BDD1B8C-84A6-423D-9CD0-BEE65A43B558}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Secp256k1.Ecdh.Test", "Secp256k1.Ecdh.Test\Secp256k1.Ecdh.Test.csproj", "{4432D1A1-572B-42F9-8BF9-ECFA52D1E29D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9BDD1B8C-84A6-423D-9CD0-BEE65A43B558}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BDD1B8C-84A6-423D-9CD0-BEE65A43B558}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BDD1B8C-84A6-423D-9CD0-BEE65A43B558}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BDD1B8C-84A6-423D-9CD0-BEE65A43B558}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4432D1A1-572B-42F9-8BF9-ECFA52D1E29D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4432D1A1-572B-42F9-8BF9-ECFA52D1E29D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4432D1A1-572B-42F9-8BF9-ECFA52D1E29D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4432D1A1-572B-42F9-8BF9-ECFA52D1E29D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {44C6A093-A589-49E0-8262-BB6DD2EA32B9}
+	EndGlobalSection
+EndGlobal

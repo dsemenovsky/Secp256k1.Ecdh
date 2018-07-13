@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Secp256k1Net
+namespace Secp256k1Ecdh
 {
     static class SymbolNameCache<TDelegate>
     {

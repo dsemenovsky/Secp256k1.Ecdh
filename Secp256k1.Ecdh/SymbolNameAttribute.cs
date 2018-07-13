@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Secp256k1Net
+namespace Secp256k1Ecdh
 {
     class SymbolNameAttribute : Attribute
     {

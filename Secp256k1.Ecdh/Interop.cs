@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Secp256k1Net
+namespace Secp256k1Ecdh
 {
 
     /// <summary>
@@ -164,6 +164,21 @@ namespace Secp256k1Net
         void* sig,      // secp256k1_ecdsa_recoverable_signature* sig
         void* input64,  // const unsigned char* input64
         int recid       // int recid
+    );
+
+    /// <summary>
+    /// Calculate ECDH shared secret.
+    /// </summary>
+    /// <param name="ctx">a secp256k1 context object</param>
+    /// <param name="output32">(Output) a pointer to a shared secret object</param>
+    /// <param name="pubkey">a pointer to a 64-byte compact signature</param>
+    /// <param name="privkey">the recovery id (0, 1, 2 or 3)</param>
+    /// <returns>1 when the signature could be parsed, 0 otherwise</returns>
+    [SymbolName(nameof(secp256k1_ecdh))]
+    public unsafe delegate int secp256k1_ecdh(IntPtr ctx,
+        void* output32,     // unsigned char* output32
+        void* pubkey,       // secp256k1_pubkey* pubkey
+        void* privkey       // const unsigned char* privkey
     );
 
 

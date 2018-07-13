@@ -10,7 +10,7 @@ using PlatInfo = System.ValueTuple<System.Runtime.InteropServices.OSPlatform, Sy
 using System.Reflection;
 using System.Collections.Concurrent;
 
-namespace Secp256k1Net
+namespace Secp256k1Ecdh
 {
     public static class LibPathResolver
     {

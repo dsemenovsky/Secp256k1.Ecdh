@@ -6,12 +6,12 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <LangVersion>latest</LangVersion>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-    <Company>Hosho</Company>
-    <Authors>Hosho</Authors>
-    <PackageTags>Secp256k1 libsecp256k1 ECDSA ethereum bitcoin</PackageTags>
-    <Description>.NET wrapper for native secp256k1 library</Description>
-    <PackageProjectUrl>https://github.com/hosho/Secp256k1.Net</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/hosho/Secp256k1.Net/blob/master/LICENSE</PackageLicenseUrl>
+    <Company>Vaultie</Company>
+    <Authors>Dmitry Semenovskiy</Authors>
+    <PackageTags>Secp256k1 libsecp256k1 ECDSA ECDH ethereum bitcoin</PackageTags>
+    <Description>.NET wrapper for native secp256k1 library with ECDH module enabled.</Description>
+    <PackageProjectUrl>https://github.com/Vaultie/Secp256k1.Ecdh</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/Vaultie/Secp256k1.Ecdh/blob/master/LICENSE</PackageLicenseUrl>
     <NoWarn>1591,1573</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
@@ -19,7 +19,10 @@
   <PropertyGroup>
     <Version Condition="'$(VersionSuffix)' != ''">0.1.$(VersionSuffix)</Version>
     <Version Condition="'$(VersionSuffix)' == ''">0.1.0</Version>
-    <RootNamespace>Secp256k1Net</RootNamespace>
+    <RootNamespace>Secp256kEcdh</RootNamespace>
+    <Version>0.1.0</Version>
+    <PackageId>Secp256k1.Ecdh</PackageId>
+    <Product>Secp256k1.Ecdh</Product>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'Release'">

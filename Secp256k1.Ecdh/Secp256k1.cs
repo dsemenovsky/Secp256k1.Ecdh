@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Secp256k1Net
+namespace Secp256k1Ecdh
 {
     public unsafe class Secp256k1 : IDisposable
     {
@@ -27,6 +27,7 @@ namespace Secp256k1Net
         readonly Lazy<secp256k1_context_destroy> secp256k1_context_destroy;
         readonly Lazy<secp256k1_ec_pubkey_parse> secp256k1_ec_pubkey_parse;
         readonly Lazy<secp256k1_ecdsa_signature_normalize> secp256k1_ecdsa_signature_normalize;
+        readonly Lazy<secp256k1_ecdh> secp256k1_ecdh;
 
         const string LIB = "secp256k1";
         public readonly string LibPath;
@@ -49,6 +50,7 @@ namespace Secp256k1Net
             secp256k1_context_destroy = LazyDelegate<secp256k1_context_destroy>();
             secp256k1_ec_pubkey_parse = LazyDelegate<secp256k1_ec_pubkey_parse>();
             secp256k1_ecdsa_signature_normalize = LazyDelegate<secp256k1_ecdsa_signature_normalize>();
+            secp256k1_ecdh = LazyDelegate<secp256k1_ecdh>();
 
             _ctx = secp256k1_context_create.Value(((uint)(Flags.SECP256K1_CONTEXT_SIGN | Flags.SECP256K1_CONTEXT_VERIFY)));
         }
@@ -293,6 +295,33 @@ namespace Secp256k1Net
         }
 
 
+        /// <summary>
+        /// Calculates ECDH secret shared key
+        /// </summary>
+        /// <param name="sharedSecretOutput">(Output) pointer to an output object. If 1 is returned, it is set to calculated shared secret. If not, its value is undefined.</param>
+        /// <param name="publicKey"> Public key pointer.</param>
+        /// <param name="privateKey">Serialized public key.</param>
+        /// <returns>True if the public key was fully valid, false if the public key could not be parsed or is invalid.</returns>
+        public bool CalculateSharedSecret(Span<byte> sharedSecretOutput, Span<byte> publicKey, Span<byte> privateKey)
+        {
+            if (sharedSecretOutput.Length != 32)
+            {
+                throw new ArgumentException($"{nameof(sharedSecretOutput)} must be 32 bytes");
+            }
+            if (publicKey.Length < PUBKEY_LENGTH)
+            {
+                throw new ArgumentException($"{nameof(publicKey)} must be {PUBKEY_LENGTH} bytes");
+            }
+
+            var privKeyPtr = Unsafe.AsPointer(ref privateKey[0]);
+            var pubKeyPtr = Unsafe.AsPointer(ref publicKey[0]);          
+            var secretPtr = Unsafe.AsPointer(ref sharedSecretOutput[0]);
+
+            var result = secp256k1_ecdh.Value(_ctx, secretPtr, pubKeyPtr, privKeyPtr);
+            return result == 1;
+        }
+
+
         public void Dispose()
         {
             if (_ctx != IntPtr.Zero)
@@ -301,8 +330,5 @@ namespace Secp256k1Net
                 _ctx = IntPtr.Zero;
             }
         }
-
-
-
     }
 }

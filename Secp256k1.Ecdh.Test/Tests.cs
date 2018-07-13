@@ -3,11 +3,20 @@ using System;
 using System.Linq;
 using System.Numerics;
 using Xunit;
+using Xunit.Abstractions;
 
-namespace Secp256k1Net.Test
+namespace Secp256k1Ecdh.Test
 {
     public class Tests
     {
+        private readonly ITestOutputHelper output;
+
+
+        public Tests(ITestOutputHelper output)
+        {
+            this.output = output;
+        }
+
         [Fact]
         public void KeyPairGeneration()
         {
@@ -16,7 +25,7 @@ namespace Secp256k1Net.Test
             Span<byte> privateKey = new byte[32];
             do
             {
-                rnd.GetBytes(privateKey);
+                rnd.GetBytes(privateKey.ToArray());
             }
             while (!secp256k1.SecretKeyVerify(privateKey));
             Span<byte> publicKey = new byte[64];
@@ -100,6 +109,41 @@ namespace Secp256k1Net.Test
 
                 // Assert our key
                 Assert.Equal("0x3a2361270fb1bdd220a2fa0f187cc6f85079043a56fb6a968dfad7d7032b07b01213e80ecd4fb41f1500f94698b1117bc9f3335bde5efbb1330271afc6e85e92", serializedKey.ToHexString(true), true);
+            }
+        }
+
+        [Fact]
+        public void CalculateSharedSecretWithSelfPubKey()
+        {
+            using (var secp256k1 = new Secp256k1())
+            {
+                Span<byte> privateKey = "90cc2eb9f4ac1562546c9899b5a68fc98a8add85a606abd506058e75ce583f49".HexToBytes();
+                Span<byte> publicKey = stackalloc byte[64];
+                Span<byte> sharedSecret = stackalloc byte[32];
+
+                secp256k1.PublicKeyCreate(publicKey, privateKey);
+                secp256k1.CalculateSharedSecret(sharedSecret, publicKey, privateKey);
+
+                Assert.Equal(32, sharedSecret.Length);
+                Assert.Equal("3e9a315412415ab738658e7f2119c434e7c2112862315d0af756d03d923874ae", sharedSecret.ToHexString());
+            }
+        }
+
+        [Fact]
+        public void CalculateSharedSecretWithAnotherPubKey()
+        {
+            using (var secp256k1 = new Secp256k1())
+            {
+                Span<byte> privateKey = "90cc2eb9f4ac1562546c9899b5a68fc98a8add85a606abd506058e75ce583f49".HexToBytes();
+                Span<byte> privateKey2 = "e815acba8fcf085a0b4141060c13b8017a08da37f2eb1d6a5416adbb621560ef".HexToBytes();
+                Span<byte> publicKey = stackalloc byte[64];
+                Span<byte> sharedSecret = stackalloc byte[32];
+
+                secp256k1.PublicKeyCreate(publicKey, privateKey2);
+                secp256k1.CalculateSharedSecret(sharedSecret, publicKey, privateKey);
+
+                Assert.Equal(32, sharedSecret.Length);
+                Assert.Equal("8fd6cc22898c5bddf1b6e596f131cea5f09ef2122f57852a90137959101bace1", sharedSecret.ToHexString());
             }
         }
     }
